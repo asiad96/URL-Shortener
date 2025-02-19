@@ -15,9 +15,9 @@ def generate_short_id(length=6):
 
 
 @app.post("/shorten")
-async def create_short_url(original_url: UrlRequest):
+async def create_short_url(request: UrlRequest):
     short_id = generate_short_id()
-    url_mapping[short_id] = original_url
+    url_mapping[short_id] = request.original_url
     return {"short_url": f"http://localhost:8000/{short_id}"}
 
 
