@@ -1,5 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 
 
 class UrlRequest(BaseModel):
-    original_url: str
+    original_url: HttpUrl
