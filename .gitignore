@@ -28,3 +28,22 @@ archive.zip
 
 # macOS
 .DS_Store
+
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Python virtual environment
+.python-version
+.venv
+
+# Local development files
+*.sqlite
+*.db
+*.log
+
+# Heroku
+*.pyc
+.heroku/
