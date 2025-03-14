@@ -1,24 +1,31 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import os
+from dotenv import load_dotenv
 
-# Database URL from environment variable
-DATABASE_URL = os.getenv(
-    "DATABASE_URL", "postgresql://url_shortener_user:BeefLiver@localhost/url_shortener"
-)
+# Load environment variables from .env file
+load_dotenv()
 
-# Handle Heroku's postgres:// vs postgresql:// difference
-if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+# Database connection parameters
+DB_PARAMS = {
+    "dbname": "neondb",
+    "user": "neondb_owner",
+    "password": "npg_jsb0a9gNwZAW",
+    "host": "ep-old-mud-a56o7njn-pooler.us-east-2.aws.neon.tech",
+    "sslmode": "require",
+}
 
-# Create the SQLAlchemy engine
-engine = create_engine(DATABASE_URL)
+# Create database URL
+DATABASE_URL = f"postgresql://{DB_PARAMS['user']}:{DB_PARAMS['password']}@{DB_PARAMS['host']}/{DB_PARAMS['dbname']}"
 
-# Create a SessionLocal class
+# Create engine with explicit SSL requirement
+engine = create_engine(DATABASE_URL, connect_args={"sslmode": "require"})
+
+# SessionLocal class
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Create a Base class for declarative models
+# Base class
 Base = declarative_base()
 
 
