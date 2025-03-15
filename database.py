@@ -8,10 +8,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Get database URL from environment
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://neondb_owner:npg_jsb0a9gNwZAW@ep-old-mud-a56o7njn-pooler.us-east-2.aws.neon.tech/neondb",
-)
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is not set")
 
 # Create engine with explicit SSL and connection pooling settings
 engine = create_engine(

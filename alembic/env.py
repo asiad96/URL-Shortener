@@ -25,20 +25,17 @@ target_metadata = Base.metadata
 
 
 def get_connection_params():
-    """Get database connection parameters."""
-    return {
-        "dbname": "neondb",
-        "user": "neondb_owner",
-        "password": "npg_jsb0a9gNwZAW",
-        "host": "ep-old-mud-a56o7njn-pooler.us-east-2.aws.neon.tech",
-        "sslmode": "require",
-    }
+    """Get database connection parameters from DATABASE_URL."""
+    url = os.getenv("DATABASE_URL")
+    if not url:
+        raise ValueError("DATABASE_URL environment variable is not set")
+    return {"url": url}
 
 
 def create_db_url():
-    """Create database URL from parameters."""
+    """Get database URL from environment."""
     params = get_connection_params()
-    return f"postgresql://{params['user']}:{params['password']}@{params['host']}/{params['dbname']}"
+    return params["url"]
 
 
 def test_connection():
